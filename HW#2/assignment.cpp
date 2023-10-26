@@ -12,18 +12,29 @@
 using namespace std;
 
 
+/**
+ * @struct flight
+ * @brief A struct representing a flight with its properties such as departure and arrival locations, departure time, price and ID.
+ */
 struct flight{
-  string from;
-  string to;
-  int hour;
-  int min;
-  int price;
-  int ID;
+  string from; /**< Departure location */
+  string to; /**< Arrival location */
+  int hour; /**< Departure hour */
+  int min; /**< Departure minute */
+  int price; /**< Price of the flight */
+  int ID; /**< ID of the flight */
   
-  flight *next;
-  flight *prev;
+  flight *next; /**< Pointer to the next flight in the linked list */
+  flight *prev; /**< Pointer to the previous flight in the linked list */
   
-  // Constructor
+  /**
+   * @brief Constructor for the flight struct.
+   * @param from Departure location.
+   * @param to Arrival location.
+   * @param hour Departure hour.
+   * @param min Departure minute.
+   * @param price Price of the flight.
+   */
   flight(string from, string to, int hour, int min, int price) {
     this->from = from;
     this->to = to;
@@ -36,13 +47,22 @@ struct flight{
   }
 };
 
+/**
+ * @brief A struct representing an airline company.
+ * 
+ */
 struct airline{
-  string name;
-  int ID;
-  airline *next;
-  flight *flights;
+  string name; /**< The name of the airline company. */
+  int ID; /**< The ID of the airline company. */
+  airline *next; /**< A pointer to the next airline company in the linked list. */
+  flight *flights; /**< A pointer to the first flight of the airline company. */
 
-  // Constructor
+  /**
+   * @brief Construct a new airline object.
+   * 
+   * @param name The name of the airline company.
+   * @param ID The ID of the airline company.
+   */
   airline(string name, int ID) {
     this->name = name;
     this->ID = ID;
@@ -53,9 +73,18 @@ struct airline{
 
 // [50|NARA->BERLIN|17:45|1150]->[249|BERLIN->TOKYO|2:20|1150]->[268|TOKYO->EDIRNE|2:25|700] $TOTAL PRICE: 3000*/
 // store the flight route in a struct like above
+/**
+ * @brief A struct representing a flight route.
+ * 
+ */
 struct flightRoute{
-  flight* f;
-  flightRoute* next;
+  flight* f; /**< A pointer to the flight. */
+  flightRoute* next; /**< A pointer to the next flight route. */
+  /**
+   * @brief Construct a new flight Route object
+   * 
+   * @param f A pointer to the flight.
+   */
   flightRoute(flight* f) {
     this->f = f;
     this->next = nullptr;
@@ -63,6 +92,11 @@ struct flightRoute{
 };
 
 // Flights must be kept ascending in time in the list.
+/**
+ * Sorts the flights of each airline in the linked list.
+ * 
+ * @param head A pointer to the head of the linked list of airlines.
+ */
 void sort_list(airline* head){
   // Traverse the linked list and sort the flights of each airline
   airline* curr = head;
@@ -115,6 +149,12 @@ void sort_list(airline* head){
 }
 
 
+/**
+ * @brief Reads airline files and returns a pair of vectors containing airline names and their flights.
+ * 
+ * @param input_done A boolean value indicating whether the input is done or not.
+ * @return A pair of vectors containing airline names and their flights.
+ */
 pair<vector<string>, vector<vector<flight>>> read_files(bool input_done){
   
   ///READ FLIGHTS///
@@ -176,6 +216,12 @@ pair<vector<string>, vector<vector<flight>>> read_files(bool input_done){
 
 
 
+/**
+ * Creates a linked list structure of airlines and their flights.
+ * @param airlines A vector of strings containing the names of the airlines.
+ * @param flights A vector of vectors of flights containing the flight information for each airline.
+ * @return A pointer to the head of the linked list.
+ */
 airline* make_linked_list_structure(vector<string> airlines, vector<vector<flight>> flights){
   airline *head = nullptr, *tail = nullptr;
   for(int i = 0; i < airlines.size(); i++){
@@ -216,6 +262,17 @@ void deleteFlightRoute(flightRoute* &route) {
     }
 }
 
+/**
+ * Finds the cheapest flight route from a given starting point to a destination with a limited number of transfers.
+ * 
+ * @param head A pointer to the head of the linked list of airlines.
+ * @param from The starting point of the flight route.
+ * @param to The destination of the flight route.
+ * @param transfers_left The maximum number of transfers allowed in the flight route.
+ * @param route A reference to a pointer to the flightRoute object that will store the cheapest flight route.
+ * @param price A reference to an integer that will store the price of the cheapest flight route.
+ * @return 1 if a valid flight route is found, 0 otherwise.
+ */
 int findCheapestFlight(airline* head, const string& from, const string& to, int transfers_left, flightRoute* &route, int &price) {
   int minPrice = INT_MAX; // initialize minPrice to a very large number
   airline* curr = head;
@@ -285,6 +342,13 @@ int findCheapestFlight(airline* head, const string& from, const string& to, int 
 }
 
 
+/**
+ * @brief Prints the flight route and deletes it.
+ * 
+ * @param route Pointer to the head of the flight route linked list.
+ * 
+ * This function prints the flight route by iterating through the linked list and printing each flight's ID, departure and arrival cities, departure time, and price. After printing the route, it deletes the linked list by iterating through it again and deleting each node.
+ */
 void printFlightRoute(flightRoute* route) {
   flightRoute* curr = route;
   while (curr != nullptr) {
@@ -304,6 +368,16 @@ void printFlightRoute(flightRoute* route) {
 }
 
 
+/**
+ * This function prompts the user to input their current location, destination, and the maximum number of transfers allowed.
+ * It then finds the cheapest flight route from the current location to the destination with the given number of transfers.
+ * If a route is found, it prints the flight route and the total price.
+ * If no route is found, it prints "No route found".
+ * If there are no transfers left, it returns 0, otherwise it returns 1.
+ *
+ * @param head A pointer to the head of the airline linked list.
+ * @return An integer indicating whether there are transfers left or not.
+ */
 int pathfinder(airline* head) {
     int transfers_left;
     string from, destination;
@@ -343,6 +417,11 @@ int pathfinder(airline* head) {
 }
 
 
+/**
+ * @brief Deletes a linked list of airlines and their flights.
+ * 
+ * @param head A reference to the head of the linked list.
+ */
 void delete_linked_list(airline* &head){
   // Traverse the linked list and delete each node
   while (head != nullptr) {
@@ -361,6 +440,11 @@ void delete_linked_list(airline* &head){
 }
 
 
+/**
+ * @brief Prints all the airlines and their flights in the linked list starting from the given head pointer.
+ * 
+ * @param head Pointer to the first node of the linked list.
+ */
 void print_all(airline* head){
   airline* curr = head;
   while (curr != nullptr) {
@@ -378,6 +462,15 @@ void print_all(airline* head){
 }
 
 
+/**
+ * Adds a new flight to the airline linked list with user input.
+ * If the airline does not exist, a new airline is created.
+ * The function finds the biggest airline ID and adds the new airline with an ID that is one greater than the biggest airline ID.
+ * The function finds the biggest flight ID and adds the new flight with an ID that is one greater than the biggest flight ID.
+ * The function sorts the linked list after adding the new flight.
+ *
+ * @param head A pointer to the head of the airline linked list.
+ */
 void add_flight_with_input(airline* head){
   string airline_name;
   string from;
@@ -476,6 +569,11 @@ void add_flight_with_input(airline* head){
 
 
 
+/**
+ * Removes a flight with the given flight_id from the airline linked list.
+ * @param head A pointer to the head of the airline linked list.
+ * @return void
+ */
 void remove_flight_with_input(airline* head){
   int flight_id;
   cout << "Flight id to remove: ";
@@ -515,6 +613,10 @@ void remove_flight_with_input(airline* head){
   }
 }
 
+/**
+ * @brief Prints the main menu options for the flight management system.
+ * 
+ */
 void printMainMenu() {
   cout << endl;
   cout <<"I***********************************************I"<<endl
@@ -530,6 +632,14 @@ void printMainMenu() {
   cout << endl;
 }  
 
+/**
+ * @brief This function processes the main menu options and performs the corresponding actions.
+ * 
+ * @details This function reads files, creates a linked list structure, prints all flights, adds a flight with input,
+ * removes a flight with input, finds the shortest path between two airports, and exits the program. 
+ * 
+ * @return void
+ */
 void processMainMenu() {
 
   pair<vector<string>, vector<vector<flight>>> lines_flights;
@@ -576,7 +686,16 @@ void processMainMenu() {
       break;
     case '6':
       cout << "Exiting.." << endl;
-      exit(0);
+      // In order to prevent memory leaks, delete the linked list before exiting
+      delete_linked_list(head);
+
+      /* Commented out exit(0) because it is an outdated method which results
+       in the locally allocated vector memorys to not be deleted 
+       making valgrind pickup memory leaks which should not exist
+      */
+      // exit(0);
+      return; // since there is already return 0 in the main function;
+      
     default:
       cout << "Invalid option: please enter again" << endl;
     }

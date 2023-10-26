@@ -224,6 +224,7 @@ pair<vector<string>, vector<vector<flight>>> read_files(bool input_done){
  */
 airline* make_linked_list_structure(vector<string> airlines, vector<vector<flight>> flights){
   airline *head = nullptr, *tail = nullptr;
+  int flight_id = 0;
   for(int i = 0; i < airlines.size(); i++){
     airline *new_airline = new airline(airlines[i], i);
     if(head == nullptr){
@@ -236,7 +237,7 @@ airline* make_linked_list_structure(vector<string> airlines, vector<vector<fligh
     }
     for(int j = 0; j < flights[i].size(); j++){
       flight *new_flight = new flight(flights[i][j].from, flights[i][j].to, flights[i][j].hour, flights[i][j].min, flights[i][j].price);
-      new_flight->ID = j;
+      new_flight->ID = flight_id++;
       if(new_airline->flights == nullptr){
         new_airline->flights = new_flight;
       }
@@ -448,6 +449,7 @@ void delete_linked_list(airline* &head){
 void print_all(airline* head){
   airline* curr = head;
   while (curr != nullptr) {
+    cout << "###################################" << endl; // Print a separator between airlines
     cout << "### AIRLINE ID: " << curr->ID << " ###" << endl;
     cout << "NAME: " << curr->name << endl;
     cout << "FLIGHTS: ";

@@ -353,11 +353,13 @@ int findCheapestFlight(airline* head, const string& from, const string& to, int 
 void printFlightRoute(flightRoute* route) {
   flightRoute* curr = route;
   while (curr != nullptr) {
-    cout << "[" << curr->f->ID << "|" << curr->f->from << "->" << curr->f->to << "|" << curr->f->hour << ":" << curr->f->min << "|" << curr->f->price << "TRY]->";
+    cout << "[" << curr->f->ID << "|" << curr->f->from << "->" << curr->f->to << "|" << curr->f->hour << ":" << curr->f->min << "|" << curr->f->price << "TRY]";
+    if (curr->next != nullptr) {
+      cout << "->";
+    }
     curr = curr->next;
   }
-  cout << endl;
-
+  cout << " ";
   //Delete the flight route
   curr = route;
   while (curr != nullptr) {

@@ -208,6 +208,13 @@ airline* make_linked_list_structure(vector<string> airlines, vector<vector<fligh
   return head;
 }
 
+void deleteFlightRoute(flightRoute* &route) {
+    while(route) {
+        flightRoute* temp = route;
+        route = route->next;
+        delete temp;
+    }
+}
 
 int findCheapestFlight(airline* head, const string& from, const string& to, int transfers_left, flightRoute* &route, int &price) {
   int minPrice = INT_MAX; // initialize minPrice to a very large number
@@ -225,7 +232,7 @@ int findCheapestFlight(airline* head, const string& from, const string& to, int 
             minPrice = f->price;
             // Update bestRoute and bestPrice with the current flight information
             if (bestRoute) {
-              delete bestRoute; // Release previous bestRoute if it exists
+              deleteFlightRoute(bestRoute); // Release previous bestRoute if it exists
             }
             bestRoute = new flightRoute(f);
             bestPrice = f->price;
@@ -243,16 +250,20 @@ int findCheapestFlight(airline* head, const string& from, const string& to, int 
               
               // Update bestRoute with the current flight information
               if (bestRoute) {
-                delete bestRoute; // Release previous bestRoute if it exists
+                deleteFlightRoute(bestRoute); // Release previous bestRoute if it exists
               }
               bestRoute = new flightRoute(f);
               bestRoute->next = route2;
               bestPrice = total_price;
             } else {
-              delete route2; // Release route2 if it's not part of the best route
+              if (route2) {
+                deleteFlightRoute(route2); // Release route2 if it exists
+              }
             }
           } else {
-            delete route2; // Release route2 if no route is found
+            if (route2) {
+              deleteFlightRoute(route2);; // Release route2 if it exists
+            }
           }
         }
       }

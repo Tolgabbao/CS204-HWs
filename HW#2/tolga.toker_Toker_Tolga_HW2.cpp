@@ -353,7 +353,8 @@ int findCheapestFlight(airline* head, const string& from, const string& to, int 
 void printFlightRoute(flightRoute* route) {
   flightRoute* curr = route;
   while (curr != nullptr) {
-    cout << "[" << curr->f->ID << "|" << curr->f->from << "->" << curr->f->to << "|" << curr->f->hour << ":" << curr->f->min << "|" << curr->f->price << "TRY]";
+    // deleted the TRY from the flight info because of the new testcases
+    cout << "[" << curr->f->ID << "|" << curr->f->from << "->" << curr->f->to << "|" << curr->f->hour << ":" << curr->f->min << "|" << curr->f->price << "]";
     if (curr->next != nullptr) {
       cout << "->";
     }
@@ -409,8 +410,8 @@ int pathfinder(airline* head) {
         cout << "$TOTAL PRICE: " << price << endl;
     }
     else {
-        cout << "No route found" << endl;
-    }
+        cout << "No path found between " << from << " and "<< destination << endl; // Changed the "No route found to", "No path found between from and destination".
+            }
 
     // Base case: if there are no transfers left, return 0
     if (transfers_left == 0) {
@@ -568,6 +569,9 @@ void add_flight_with_input(airline* head){
     }
     curr = curr->next;
   }
+  // Cout statement to show that the flight is added according to testcase 2
+  // Flight ID 320 is added to the list..
+  cout << "Flight ID " << max_flight_id + 1 << " is added to the list.." << endl;
   sort_list(head);
 }
 
@@ -588,7 +592,8 @@ void remove_flight_with_input(airline* head){
     flight* f = curr->flights;
     while (f != nullptr) {
       if (f->ID == flight_id) {
-        cout << "Removing flight id: " << flight_id << endl;
+        //Changed the cout to "Flight ID 7 is removed from the list.." according to new testcase
+        cout << "Flight ID " << flight_id << " is removed from the list.." << endl;
         if (f->prev == nullptr) {
           curr->flights = f->next;
           if (f->next != nullptr) {
@@ -658,11 +663,11 @@ void processMainMenu() {
     case '0':
       // cout << "Commented out functionalities are going to be implemented" << endl;
       delete_linked_list(head);
-      cout << "Data is deleted!" << endl;
+      cout << "Data is destroyed.." << endl; // changed the deleted to destroyed according to the new testcases
       input_done = false;
       break;
     case '1':
-      if(input_done!=true){
+      if(!input_done){
 	lines_flights = read_files(input_done);
 	head = make_linked_list_structure(lines_flights.first, lines_flights.second);
 	cout << "Files are read.." << endl;

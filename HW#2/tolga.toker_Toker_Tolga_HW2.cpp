@@ -450,6 +450,10 @@ void delete_linked_list(airline* &head){
  * @param head Pointer to the first node of the linked list.
  */
 void print_all(airline* head){
+  if (head == nullptr) {
+    cout << "List is empty.." << endl;
+    return;
+  }
   airline* curr = head;
   while (curr != nullptr) {
     cout << "###################################" << endl; // Print a separator between airlines
@@ -582,11 +586,12 @@ void add_flight_with_input(airline* head){
  * @param head A pointer to the head of the airline linked list.
  * @return void
  */
-void remove_flight_with_input(airline* head){
+void remove_flight_with_input(airline*& head){
   int flight_id;
   cout << "Flight id to remove: ";
   cin >> flight_id;
   airline* curr = head;
+  airline* prev = nullptr; // keep track of the previous airline
   bool found = false; // add a flag to check if the flight is found
   while (curr != nullptr) {
     flight* f = curr->flights;
@@ -613,8 +618,17 @@ void remove_flight_with_input(airline* head){
       f = f->next;
     }
     if (found) { // break out of the outer loop if the flight is found
+      if (curr->flights == nullptr) { // if no flights left in the airline
+        if (prev != nullptr) {
+          prev->next = curr->next;
+        } else {
+          head = curr->next; // if curr is the head of the list, set the head to the next airline
+        }
+        delete curr;
+      }
       break;
     }
+    prev = curr;
     curr = curr->next;
   }
   if (!found) { // print the message if the flight is not found

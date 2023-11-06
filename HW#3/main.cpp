@@ -21,49 +21,61 @@ void processWorkload(InstructorQueue& instructorsQueue, StudentQueue& studentsQu
         cout << "Processing prof." << name << "'s request (with ID " << id << ") of service (function):" << endl << request << endl;
 		cout << "-------------------------------------------------------" << endl;
 		CommandStack programStack;
-        serviceList.executeService(request,paymentList, programStack, id, name, "instructor");
+        serviceList.executeService(request,paymentList, programStack, name, id, "instructor");
         cout << "GOING BACK TO MAIN MENU" << endl;
     } else if (!studentsQueue.isEmpty()) {
         cout << "Instructors queue is empty. Proceeding with students queue..." << endl;
         string request = studentsQueue.dequeue(id, name);
-        cout << "Processing" << name << "'s request (with ID " << id << ") of service (function):" << endl << request << endl;
+        cout << "Processing " << name << "'s request (with ID " << id << ") of service (function):" << endl << request << endl;
 		cout << "-------------------------------------------------------" << endl;
 		CommandStack programStack;
-        serviceList.executeService(request, paymentList, programStack, id, name, "student");
+        serviceList.executeService(request, paymentList, programStack, name, id, "student");
         cout << "GOING BACK TO MAIN MENU" << endl;
     } else {
         cout << "Both instructor's and student's queue is empty." << endl << "No request is processed." << endl << "GOING BACK TO MAIN MENU" << endl;
     }
 }
 
-void addInstructorWorkload(InstructorQueue& instructorsQueue) {
+void addInstructorWorkload(InstructorQueue& instructorsQueue, PaymentList& paymentList, ServiceList& serviceList) {
 	string request;
 	string name;
 	string id;
 	cout << "Add a service (function) that the instructor wants to use: ";
 	cin >> request;
-	cout << "Give instructor's name: ";
-	cin >> name;
-	cout << "Give instructor's ID: ";
-	cin >> id;
-	instructorsQueue.enqueue(request, name, id);
-	cout << "Prof. " << name << "'s service request of " << request << "has been put in the instructor's queue." << endl; 
-	cout << "Waiting to be served..." << endl;
+	if (!serviceList.isServiceAvailable(request)) {
+		cout << "The requested service(function) does not exist." << endl;
+		cout << "GOING BACK TO MAIN MENU" << endl << endl;
+	}
+	else {
+		cout << "Give instructor's name: ";
+		cin >> name;
+		cout << "Give instructor's ID: ";
+		cin >> id;
+		instructorsQueue.enqueue(request, name, id, paymentList);
+		cout << "Prof. " << name << "'s service request of " << request << " has been put in the instructor's queue." << endl; 
+		cout << "Waiting to be served..." << endl;
+	}
 }
 
-void addStudentWorkload(StudentQueue& studentsQueue) {
+void addStudentWorkload(StudentQueue& studentsQueue, PaymentList& paymentList, ServiceList& serviceList) {
 	string request;
 	string name;
 	string id;
 	cout << "Add a service (function) that the student wants to use: ";
 	cin >> request;
-	cout << "Give student's name: ";
-	cin >> name;
-	cout << "Give student's ID: ";
-	cin >> id;
-	studentsQueue.enqueue(request, name, id);
-	cout << name << "'s service request of " << request << "has been put in the student's queue." << endl;
-	cout << "Waiting to be served..." << endl;
+	if (!serviceList.isServiceAvailable(request)) {
+		cout << "The requested service(function) does not exist." << endl;
+		cout << "GOING BACK TO MAIN MENU" << endl << endl;
+	}
+	else {
+		cout << "Give student's name: ";
+		cin >> name;
+		cout << "Give student's ID: ";
+		cin >> id;
+		studentsQueue.enqueue(request, name, id, paymentList);
+		cout << name << "'s service request of " << request << " has been put in the student's queue." << endl;
+		cout << "Waiting to be served..." << endl;
+	}
 }
 
 void displayUsersPayments(PaymentList paymentList) {
@@ -72,12 +84,9 @@ void displayUsersPayments(PaymentList paymentList) {
 
 //Initialize the service list (read from the file)
 void init(ServiceList& serviceList){
-	//Initialize the queues
 	//Initialize the service list
 	//Read from the file
 	//Add services to the service list
-	
-	//Read from the file
 	ifstream file;
 	char choice = 'y';
 	while (choice == 'Y' || choice == 'y') {
@@ -141,10 +150,10 @@ int main()
 				cout<<"PROGRAM EXITING ... "<<endl;
 				exit(0);
 			case 1:
-				addInstructorWorkload(instructorsQueue);
+				addInstructorWorkload(instructorsQueue, paymentList, serviceList);
 				break;
 			case 2:
-				addStudentWorkload(studentsQueue);
+				addStudentWorkload(studentsQueue, paymentList, serviceList);
 				break;
 			case 3:
 				processWorkload(instructorsQueue, studentsQueue, serviceList, paymentList);

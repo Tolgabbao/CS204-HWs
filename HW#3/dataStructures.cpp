@@ -62,11 +62,13 @@ void ServiceList::printServices() {
     while (temp != NULL) {
         cout << temp->serviceName << ":" << endl;
         CommandNode* tempCommand = temp->commandList;
+        string commands = "";
         while (tempCommand != NULL) {
-            cout << tempCommand->command << ";" << endl;
+            commands += tempCommand->command + "; ";
             tempCommand = tempCommand->next;
         }
-        cout << "." << endl;
+        commands = commands.substr(0, commands.length() - 2);
+        cout << commands << endl << endl;
         temp = temp->nextService;
     }
 }
@@ -98,20 +100,46 @@ void ServiceList::executeService(string serviceName, PaymentList& paymentList, C
                     /*Calling function_2 from function_1*/
                     string calledServiceName = command.substr(5, command.length() - 5);
                     cout << "Calling " << calledServiceName << " from " << temp->serviceName << endl;
-                    programStack.push(calledServiceName, temp->serviceName, tempCommand->command);
+                    
                     executeService(calledServiceName, paymentList, programStack, name, id, job);
-                    programStack.pop();
+                    
                     servicePrice += 5;
                 }
                 tempCommand = tempCommand->next;
             }
             paymentList.addPayment(name, id, servicePrice, job);
             cout << serviceName << " is finished. Clearing the stack from it's data..." << endl;
+            while (!programStack.isEmpty()) {
+                if (programStack.getServiceName() == serviceName) {
+                    programStack.pop();
+                } else {
+                    break;
+                }
+            }
             return;
         }
         temp = temp->nextService;
     }
     //cout << "Service not found" << endl;
+}
+
+bool ServiceList::isServiceAvailable(string serviceName) {
+    ServiceNode* temp = head;
+    while (temp != NULL) {
+        if (temp->serviceName == serviceName) {
+            return true;
+        }
+        temp = temp->nextService;
+    }
+    return false;
+}
+
+string CommandStack::getServiceName() {
+    if (top == NULL) {
+        return "";
+    } else {
+        return top->service_name;
+    }
 }
 
 // Constructor
@@ -131,13 +159,15 @@ StudentQueue::~StudentQueue() {
 }
 
 // Method to add a request to the queue
-void StudentQueue::enqueue(string request, string name, string id) {
+void StudentQueue::enqueue(string request, string name, string id, PaymentList& paymentList) {
     // Create a new request node
     RequestNode* newRequest = new RequestNode;
     newRequest->request = request;
     newRequest->name = name;
     newRequest->id = id;
     newRequest->next = NULL;
+
+    paymentList.addPayment(name, id, 0, "student");
 
     // Add the request to the queue
     if (front == NULL) {
@@ -183,7 +213,7 @@ InstructorQueue::~InstructorQueue() {
 }
 
 // Method to add a request to the queue
-void InstructorQueue::enqueue(string request, string name, string id) {
+void InstructorQueue::enqueue(string request, string name, string id, PaymentList& paymentList) {
     if (front == -1) {
         front = 0;
     }
@@ -191,6 +221,7 @@ void InstructorQueue::enqueue(string request, string name, string id) {
     array[rear].request = request;
     array[rear].name = name;
     array[rear].id = id;
+    paymentList.addPayment(name, id, 0, "instructor");
 }
 
 // Method to remove a request from the queue
@@ -273,7 +304,7 @@ void PaymentList::addPayment(string name, string id, int payment, string job) {
 void PaymentList::printPayments() {
     PaymentNode* temp = head;
     while (temp != NULL) {
-        cout << temp->name << " " << temp->id << " " << temp->payment << endl;
+        cout << "Name: "<< temp->name << " ID: " << temp->id << " " << temp->payment << " TRY" << endl;
         temp = temp->next;
     }
 }

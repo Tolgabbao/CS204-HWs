@@ -26,7 +26,7 @@ struct ServiceNode {
 struct RequestNode {
     string request;
     string name;
-    string id;
+    int id;
     RequestNode* next;
 };
 
@@ -35,13 +35,13 @@ public:
     PaymentList(); // Constructor
     ~PaymentList(); // Destructor
 
-    void addPayment(string name, string id, int payment, string job); // Method to add a payment to the list
+    void addPayment(string name, int id, int payment, string job); // Method to add a payment to the list
     void printPayments(); // Method to print all payments
     void printPayments(string job); // Method to print all payments for students or instructors
 private:
     struct PaymentNode {
         string name;
-        string id;
+        int id;
         string job;
         int payment;
         PaymentNode* next;
@@ -78,7 +78,7 @@ public:
 
     void addService(string serviceName, std::vector<string> commands); // Method to add a service to the list
     void printServices(); // Method to print all services and their commands
-    void executeService(string serviceName, PaymentList& paymentList, CommandStack& programStack, string name, string id, string job); // Method to execute a specific service
+    void executeService(string serviceName, PaymentList& paymentList, CommandStack& programStack, string name, int id, string job); // Method to execute a specific service
     bool isServiceAvailable(string serviceName); // Method to check if a service is available
 private:
     ServiceNode* head; // Head of the linked list
@@ -90,8 +90,8 @@ public:
     StudentQueue(); // Constructor
     ~StudentQueue(); // Destructor
 
-    void enqueue(string request, string name, string id, PaymentList& paymentList); // Method to add a request to the queue
-    string dequeue(string &id, string &name); // Method to remove a request from the queue
+    void enqueue(string request, string name, int id, PaymentList& paymentList); // Method to add a request to the queue
+    string dequeue(int &id, string &name); // Method to remove a request from the queue
     bool isEmpty(); // Method to check if the queue is empty
 
 private:
@@ -105,8 +105,8 @@ public:
     InstructorQueue(int size); // Constructor
     ~InstructorQueue(); // Destructor
 
-    void enqueue(string request, string name, string id, PaymentList& PaymentList); // Method to add a request to the queue
-    string dequeue(string &id, string &name); // Method to remove a request from the queue
+    void enqueue(string request, string name, int id, PaymentList& PaymentList); // Method to add a request to the queue
+    string dequeue(int &id, string &name); // Method to remove a request from the queue
     bool isEmpty(); // Method to check if the queue is empty
     bool isFull(); // Method to check if the queue is full
 

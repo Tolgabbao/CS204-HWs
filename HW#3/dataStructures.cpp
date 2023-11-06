@@ -8,13 +8,13 @@ using namespace std;
 
 // Constructor
 ServiceList::ServiceList() {
-    head = NULL;
+    head = nullptr;
 }
 
 // Destructor
 ServiceList::~ServiceList() {
     ServiceNode* temp = head;
-    while (temp != NULL) {
+    while (temp != nullptr) {
         ServiceNode* next = temp->nextService;
         delete temp;
         temp = next;
@@ -26,17 +26,17 @@ void ServiceList::addService(string serviceName, vector<string> commands) {
     // Create a new service node
     ServiceNode* newService = new ServiceNode;
     newService->serviceName = serviceName;
-    newService->nextService = NULL;
-    newService->commandList = NULL;
+    newService->nextService = nullptr;
+    newService->commandList = nullptr;
 
     // Add the commands to the service
-    CommandNode* temp = NULL;
+    CommandNode* temp = nullptr;
     for (int i = 0; i < commands.size(); i++) {
         CommandNode* newCommand = new CommandNode;
         newCommand->command = commands[i];
-        newCommand->next = NULL;
+        newCommand->next = nullptr;
 
-        if (temp == NULL) {
+        if (temp == nullptr) {
             newService->commandList = newCommand;
         } else {
             temp->next = newCommand;
@@ -45,11 +45,11 @@ void ServiceList::addService(string serviceName, vector<string> commands) {
     }
 
     // Add the service to the list
-    if (head == NULL) {
+    if (head == nullptr) {
         head = newService;
     } else {
         ServiceNode* temp = head;
-        while (temp->nextService != NULL) {
+        while (temp->nextService != nullptr) {
             temp = temp->nextService;
         }
         temp->nextService = newService;
@@ -59,27 +59,33 @@ void ServiceList::addService(string serviceName, vector<string> commands) {
 // Method to print all services and their commands
 void ServiceList::printServices() {
     ServiceNode* temp = head;
-    while (temp != NULL) {
+    while (temp->nextService != nullptr) {
         cout << temp->serviceName << ":" << endl;
         CommandNode* tempCommand = temp->commandList;
         string commands = "";
-        while (tempCommand != NULL) {
-            commands += tempCommand->command + "; ";
+        while (tempCommand != nullptr) {
+            commands += tempCommand->command + ";, ";
             tempCommand = tempCommand->next;
         }
-        commands = commands.substr(0, commands.length() - 2);
-        cout << commands << endl << endl;
+        commands = commands.substr(0, commands.length() - 3) + ".";
         temp = temp->nextService;
+        if (temp->nextService == nullptr) {
+            cout << commands << endl;
+        }
+        else{
+            cout << commands << endl << endl;
+        }
+        
     }
 }
 // cout << request << " is finished. Clearing the stack from it's data..." << endl;
-void ServiceList::executeService(string serviceName, PaymentList& paymentList, CommandStack& programStack, string name, string id, string job) {
+void ServiceList::executeService(string serviceName, PaymentList& paymentList, CommandStack& programStack, string name, int id, string job) {
     ServiceNode* temp = head;
-    while (temp != NULL) {
+    while (temp != nullptr) {
         if (temp->serviceName == serviceName) {
             CommandNode* tempCommand = temp->commandList;
             int servicePrice = 0;
-            while (tempCommand != NULL) {
+            while (tempCommand != nullptr) {
                 string command = tempCommand->command;
                 if (command.substr(0, 6) == "define") {
                     string variableName = command.substr(7);
@@ -88,7 +94,12 @@ void ServiceList::executeService(string serviceName, PaymentList& paymentList, C
                 } else if (command == "print stack") {
                     /*Executing print stack; command from function_1
                     PRINTING THE STACK TRACE:*/
-                    cout << "Executing print stack; command from "<< temp->serviceName << endl;
+                    if (tempCommand->next == nullptr){
+                        cout << "Executing print stack command from "<< temp->serviceName << endl;
+                    }
+                    else{
+                        cout << "Executing print stack; command from "<< temp->serviceName << endl;
+                    }
                     cout << "PRINTING THE STACK TRACE:" << endl;
                     if (programStack.isEmpty()) {
                         cout << "The stack is empty" << endl;
@@ -125,7 +136,7 @@ void ServiceList::executeService(string serviceName, PaymentList& paymentList, C
 
 bool ServiceList::isServiceAvailable(string serviceName) {
     ServiceNode* temp = head;
-    while (temp != NULL) {
+    while (temp != nullptr) {
         if (temp->serviceName == serviceName) {
             return true;
         }
@@ -135,7 +146,7 @@ bool ServiceList::isServiceAvailable(string serviceName) {
 }
 
 string CommandStack::getServiceName() {
-    if (top == NULL) {
+    if (top == nullptr) {
         return "";
     } else {
         return top->service_name;
@@ -144,14 +155,14 @@ string CommandStack::getServiceName() {
 
 // Constructor
 StudentQueue::StudentQueue() {
-    front = NULL;
-    rear = NULL;
+    front = nullptr;
+    rear = nullptr;
 }
 
 // Destructor
 StudentQueue::~StudentQueue() {
     RequestNode* temp = front;
-    while (temp != NULL) {
+    while (temp != nullptr) {
         RequestNode* next = temp->next;
         delete temp;
         temp = next;
@@ -159,18 +170,18 @@ StudentQueue::~StudentQueue() {
 }
 
 // Method to add a request to the queue
-void StudentQueue::enqueue(string request, string name, string id, PaymentList& paymentList) {
+void StudentQueue::enqueue(string request, string name, int id, PaymentList& paymentList) {
     // Create a new request node
     RequestNode* newRequest = new RequestNode;
     newRequest->request = request;
     newRequest->name = name;
     newRequest->id = id;
-    newRequest->next = NULL;
+    newRequest->next = nullptr;
 
     paymentList.addPayment(name, id, 0, "student");
 
     // Add the request to the queue
-    if (front == NULL) {
+    if (front == nullptr) {
         front = newRequest;
         rear = newRequest;
     } else {
@@ -180,8 +191,8 @@ void StudentQueue::enqueue(string request, string name, string id, PaymentList& 
 }
 
 // Method to remove a request from the queue
-string StudentQueue::dequeue(string &id, string &name) {
-    if (front == NULL) {
+string StudentQueue::dequeue(int &id, string &name) {
+    if (front == nullptr) {
         return "";
     } else {
         RequestNode* temp = front;
@@ -196,7 +207,7 @@ string StudentQueue::dequeue(string &id, string &name) {
 
 // Method to check if the queue is empty
 bool StudentQueue::isEmpty() {
-    return front == NULL;
+    return front == nullptr;
 }
 
 // Constructor for InstructorQueue
@@ -213,7 +224,7 @@ InstructorQueue::~InstructorQueue() {
 }
 
 // Method to add a request to the queue
-void InstructorQueue::enqueue(string request, string name, string id, PaymentList& paymentList) {
+void InstructorQueue::enqueue(string request, string name, int id, PaymentList& paymentList) {
     if (front == -1) {
         front = 0;
     }
@@ -225,7 +236,7 @@ void InstructorQueue::enqueue(string request, string name, string id, PaymentLis
 }
 
 // Method to remove a request from the queue
-string InstructorQueue::dequeue(string &id, string &name) {
+string InstructorQueue::dequeue(int &id, string &name) {
     if (front == -1) {
         return "";
     } else {
@@ -254,13 +265,13 @@ bool InstructorQueue::isFull() {
 
 // Constructor
 PaymentList::PaymentList() {
-    head = NULL;
+    head = nullptr;
 }
 
 // Destructor
 PaymentList::~PaymentList() {
     PaymentNode* temp = head;
-    while (temp != NULL) {
+    while (temp != nullptr) {
         PaymentNode* next = temp->next;
         delete temp;
         temp = next;
@@ -268,11 +279,11 @@ PaymentList::~PaymentList() {
 }
 
 // Method to add a payment to the list
-void PaymentList::addPayment(string name, string id, int payment, string job) {
+void PaymentList::addPayment(string name, int id, int payment, string job) {
     // Traverse the list to find a node with the same ID
     PaymentNode* temp = head;
-    while (temp != NULL) {
-        if (temp->id == id) {
+    while (temp != nullptr) {
+        if (temp->id == id && temp->name == name) {
             // Add the payment to the existing node
             temp->payment += payment;
             return;
@@ -286,14 +297,14 @@ void PaymentList::addPayment(string name, string id, int payment, string job) {
     newPayment->id = id;
     newPayment->payment = payment;
     newPayment->job = job;
-    newPayment->next = NULL;
+    newPayment->next = nullptr;
 
     // Add the payment to the end of the list
-    if (head == NULL) {
+    if (head == nullptr) {
         head = newPayment;
     } else {
         temp = head;
-        while (temp->next != NULL) {
+        while (temp->next != nullptr) {
             temp = temp->next;
         }
         temp->next = newPayment;
@@ -303,16 +314,19 @@ void PaymentList::addPayment(string name, string id, int payment, string job) {
 // Method to print all payments
 void PaymentList::printPayments() {
     PaymentNode* temp = head;
-    while (temp != NULL) {
+    while (temp != nullptr) {
         cout << "Name: "<< temp->name << " ID: " << temp->id << " " << temp->payment << " TRY" << endl;
         temp = temp->next;
+    }
+    if (head == nullptr) {
+        cout << "No payments defined." << endl;
     }
 }
 
 // Method to print all payments for students or instructors
 void PaymentList::printPayments(string job) {
     PaymentNode* temp = head;
-    while (temp != NULL) {
+    while (temp != nullptr) {
         if (temp->job == job) {
             cout << temp->name << " " << temp->id << " " << temp->payment << endl;
         }
@@ -323,13 +337,13 @@ void PaymentList::printPayments(string job) {
 
 // Constructor
 CommandStack::CommandStack() {
-    top = NULL;
+    top = nullptr;
 }
 
 // Destructor
 CommandStack::~CommandStack() {
     CommandNode* temp = top;
-    while (temp != NULL) {
+    while (temp != nullptr) {
         CommandNode* next = temp->next;
         delete temp;
         temp = next;
@@ -343,10 +357,10 @@ void CommandStack::push(string variable_name, string service_name, string comman
     newCommand->variable_name = variable_name;
     newCommand->service_name = service_name;
     newCommand->command = command;
-    newCommand->next = NULL;
+    newCommand->next = nullptr;
 
     // Add the command to the stack
-    if (top == NULL) {
+    if (top == nullptr) {
         top = newCommand;
     } else {
         newCommand->next = top;
@@ -357,7 +371,7 @@ void CommandStack::push(string variable_name, string service_name, string comman
 
 // Method to remove a command from the stack
 string CommandStack::pop() {
-    if (top == NULL) {
+    if (top == nullptr) {
         return "";
     } else {
         CommandNode* temp = top;
@@ -370,13 +384,13 @@ string CommandStack::pop() {
 
 // Method to check if the stack is empty
 bool CommandStack::isEmpty() {
-    return top == NULL;
+    return top == nullptr;
 }
 
 // Method to print all commands in the stack
 void CommandStack::printStack() {
     CommandNode* temp = top;
-    while (temp != NULL) {
+    while (temp != nullptr) {
         cout << temp->variable_name << " " << temp->service_name << " " << temp->command << endl;
         temp = temp->next;
     }
@@ -388,7 +402,7 @@ function_1: define y;*/
 void CommandStack::printReverseStack() {
     CommandNode* temp = top;
     vector<string> commands;
-    while (temp != NULL) {
+    while (temp != nullptr) {
         commands.push_back(temp->service_name + ": " + temp->command + ";");
         temp = temp->next;
     }

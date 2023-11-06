@@ -1,4 +1,6 @@
 //CS204 Fall 2023 - HW3: Stacks & Queues and SU services
+//
+
 
 #include <iostream>
 #include <fstream>       // for ifstream
@@ -10,67 +12,71 @@
 #include "dataStructures.h"
 
 using namespace std;
-//TODO: Modify this part to make sure to impelement the logic for 10 requests for instructors and 1 request for students
 
+// Method to process the workload
 void processWorkload(InstructorQueue& instructorsQueue, StudentQueue& studentsQueue, ServiceList& serviceList, PaymentList& paymentList) {
-	string id = "";
-	string name = "";
-    if (!instructorsQueue.isEmpty()) {
+    static int instructorCount = 0;
+    int id = 0;
+    string name = "";
+
+    if (!instructorsQueue.isEmpty() && instructorCount < 10) {
         cout << "Processing instructors queue..." << endl;
         string request = instructorsQueue.dequeue(id, name);
         cout << "Processing prof." << name << "'s request (with ID " << id << ") of service (function):" << endl << request << endl;
-		cout << "-------------------------------------------------------" << endl;
-		CommandStack programStack;
-        serviceList.executeService(request,paymentList, programStack, name, id, "instructor");
+        cout << "-------------------------------------------------------" << endl;
+        CommandStack programStack;
+        serviceList.executeService(request, paymentList, programStack, name, id, "instructor");
         cout << "GOING BACK TO MAIN MENU" << endl;
+        instructorCount++;
     } else if (!studentsQueue.isEmpty()) {
-        cout << "Instructors queue is empty. Proceeding with students queue..." << endl;
+		cout << "Instructors queue is empty. Proceeding with students queue..." << endl;
         string request = studentsQueue.dequeue(id, name);
         cout << "Processing " << name << "'s request (with ID " << id << ") of service (function):" << endl << request << endl;
-		cout << "-------------------------------------------------------" << endl;
-		CommandStack programStack;
+        cout << "-------------------------------------------------------" << endl;
+        CommandStack programStack;
         serviceList.executeService(request, paymentList, programStack, name, id, "student");
         cout << "GOING BACK TO MAIN MENU" << endl;
+        instructorCount = 0;
     } else {
         cout << "Both instructor's and student's queue is empty." << endl << "No request is processed." << endl << "GOING BACK TO MAIN MENU" << endl;
     }
 }
 
 void addInstructorWorkload(InstructorQueue& instructorsQueue, PaymentList& paymentList, ServiceList& serviceList) {
-	string request;
-	string name;
-	string id;
-	cout << "Add a service (function) that the instructor wants to use: ";
+	string request = "";
+	string name = "";
+	int id = 0;
+	cout << "Add a service (function) that the instructor wants to use: " << endl;
 	cin >> request;
 	if (!serviceList.isServiceAvailable(request)) {
-		cout << "The requested service(function) does not exist." << endl;
-		cout << "GOING BACK TO MAIN MENU" << endl << endl;
+		cout << "The requested service (function) does not exist." << endl;
+		cout << "GOING BACK TO MAIN MENU" << endl;
 	}
 	else {
 		cout << "Give instructor's name: ";
 		cin >> name;
-		cout << "Give instructor's ID: ";
+		cout << "Give instructor's ID (an int): ";
 		cin >> id;
 		instructorsQueue.enqueue(request, name, id, paymentList);
-		cout << "Prof. " << name << "'s service request of " << request << " has been put in the instructor's queue." << endl; 
+		cout << "Prof. " << name << "'s service request of " << request << endl <<"has been put in the instructor's queue." << endl; 
 		cout << "Waiting to be served..." << endl;
 	}
 }
 
 void addStudentWorkload(StudentQueue& studentsQueue, PaymentList& paymentList, ServiceList& serviceList) {
-	string request;
-	string name;
-	string id;
-	cout << "Add a service (function) that the student wants to use: ";
+	string request = "";
+	string name = "";
+	int id = 0;
+	cout << "Add a service (function) that the student wants to use: " << endl;
 	cin >> request;
 	if (!serviceList.isServiceAvailable(request)) {
-		cout << "The requested service(function) does not exist." << endl;
-		cout << "GOING BACK TO MAIN MENU" << endl << endl;
+		cout << "The requested service (function) does not exist." << endl;
+		cout << "GOING BACK TO MAIN MENU" << endl;
 	}
 	else {
 		cout << "Give student's name: ";
 		cin >> name;
-		cout << "Give student's ID: ";
+		cout << "Give student's ID (an int): ";
 		cin >> id;
 		studentsQueue.enqueue(request, name, id, paymentList);
 		cout << name << "'s service request of " << request << " has been put in the student's queue." << endl;
@@ -78,7 +84,7 @@ void addStudentWorkload(StudentQueue& studentsQueue, PaymentList& paymentList, S
 	}
 }
 
-void displayUsersPayments(PaymentList paymentList) {
+void displayUsersPayments(PaymentList& paymentList) {
 	paymentList.printPayments();
 }
 
@@ -89,9 +95,9 @@ void init(ServiceList& serviceList){
 	//Add services to the service list
 	ifstream file;
 	char choice = 'y';
+	cout << "If you want to open a service (function) defining file," << endl;
+	cout << "then press (Y/y) for 'yes', otherwise press any single key" << endl;
 	while (choice == 'Y' || choice == 'y') {
-		cout << "If you want to open a service (function) defining file," << endl;
-		cout << "then press (Y/y) for 'yes', otherwise press any single key" << endl;
 		cin >> choice;
 		if (choice == 'Y' || choice == 'y') {
 			string fileName;
@@ -99,9 +105,11 @@ void init(ServiceList& serviceList){
 			cin >> fileName;
 			file.open(fileName);
 			if (!file) {
-				cout << "Unable to open file" << endl;
+				cout << "Could not open the file " << fileName << endl;
 				exit(1);
 			}
+			cout << "Do you want to open another service defining file?" << endl;
+			cout << "Press (Y/y) for 'yes', otherwise press anykey" << endl;
 		}
 		
 		string line;
@@ -120,13 +128,13 @@ void init(ServiceList& serviceList){
 	//Add services to the service list
 	cout << "------------------------------------------------------------------" << endl <<
 	"PRINTING AVAILABLE SERVICES (FUNCTIONS) TO BE CHOSEN FROM THE USERS" << endl <<
-	"------------------------------------------------------------------" << endl;
+	"------------------------------------------------------------------" << endl << endl << endl;
 	serviceList.printServices();
 }
 
 int main()
 {
-	InstructorQueue instructorsQueue(10);
+	InstructorQueue instructorsQueue(500);
 	StudentQueue studentsQueue;	
 	ServiceList serviceList;
 	PaymentList paymentList;

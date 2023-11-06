@@ -14,7 +14,7 @@ Do you want to open another service defining file?
 Press (Y/y) for 'yes', otherwise press anykey
 n
 ------------------------------------------------------------------
-PRINTIG AVAILABLE SERVICES (FUNCTIONS) TO BE CHOSEN FROM THE USERS
+PRINTING AVAILABLE SERVICES (FUNCTIONS) TO BE CHOSEN FROM THE USERS
 ------------------------------------------------------------------
 
 
@@ -52,7 +52,7 @@ Waiting to be served...
 **********************************************************************
 
 Pick an option from above (int number from 0 to 3): 1
-Add a service (function) that the intructor wants to use:
+Add a service (function) that the instructor wants to use:
 function_1
 Give instructor's name: Kamer
 Give instructor's ID (an int): 12345
@@ -85,7 +85,7 @@ Waiting to be served...
 **********************************************************************
 
 Pick an option from above (int number from 0 to 3): 1
-Add a service (function) that the intructor wants to use:
+Add a service (function) that the instructor wants to use:
 function_3
 Give instructor's name: Fatih
 Give instructor's ID (an int): 20232

@@ -14,7 +14,7 @@ Do you want to open another service defining file?
 Press (Y/y) for 'yes', otherwise press anykey
 n
 ------------------------------------------------------------------
-PRINTIG AVAILABLE SERVICES (FUNCTIONS) TO BE CHOSEN FROM THE USERS
+PRINTING AVAILABLE SERVICES (FUNCTIONS) TO BE CHOSEN FROM THE USERS
 ------------------------------------------------------------------
 
 
@@ -36,7 +36,7 @@ print stack;, define a;, define x;, define z;, print stack;, define c;, print st
 **********************************************************************
 
 Pick an option from above (int number from 0 to 3): 1
-Add a service (function) that the intructor wants to use:
+Add a service (function) that the instructor wants to use:
 function_3
 Give instructor's name: in1
 Give instructor's ID (an int): 1
@@ -53,7 +53,7 @@ Waiting to be served...
 **********************************************************************
 
 Pick an option from above (int number from 0 to 3): 1
-Add a service (function) that the intructor wants to use:
+Add a service (function) that the instructor wants to use:
 function_3
 Give instructor's name: in2
 Give instructor's ID (an int): 2
@@ -70,7 +70,7 @@ Waiting to be served...
 **********************************************************************
 
 Pick an option from above (int number from 0 to 3): 1
-Add a service (function) that the intructor wants to use:
+Add a service (function) that the instructor wants to use:
 function_3
 Give instructor's name: in3
 Give instructor's ID (an int): 3
@@ -87,7 +87,7 @@ Waiting to be served...
 **********************************************************************
 
 Pick an option from above (int number from 0 to 3): 1
-Add a service (function) that the intructor wants to use:
+Add a service (function) that the instructor wants to use:
 function_3
 Give instructor's name: in4
 Give instructor's ID (an int): 4
@@ -104,7 +104,7 @@ Waiting to be served...
 **********************************************************************
 
 Pick an option from above (int number from 0 to 3): 1
-Add a service (function) that the intructor wants to use:
+Add a service (function) that the instructor wants to use:
 function_3
 Give instructor's name: in5
 Give instructor's ID (an int): 5
@@ -121,7 +121,7 @@ Waiting to be served...
 **********************************************************************
 
 Pick an option from above (int number from 0 to 3): 1
-Add a service (function) that the intructor wants to use:
+Add a service (function) that the instructor wants to use:
 function_1
 Give instructor's name: in6
 Give instructor's ID (an int): 6
@@ -154,7 +154,7 @@ Waiting to be served...
 **********************************************************************
 
 Pick an option from above (int number from 0 to 3): 1
-Add a service (function) that the intructor wants to use:
+Add a service (function) that the instructor wants to use:
 function_3
 Give instructor's name: in7
 Give instructor's ID (an int): 7
@@ -171,7 +171,7 @@ Waiting to be served...
 **********************************************************************
 
 Pick an option from above (int number from 0 to 3): 1
-Add a service (function) that the intructor wants to use:
+Add a service (function) that the instructor wants to use:
 function_3
 Give instructor's name: in8
 Give instructor's ID (an int): 8
@@ -204,7 +204,7 @@ Waiting to be served...
 **********************************************************************
 
 Pick an option from above (int number from 0 to 3): 1
-Add a service (function) that the intructor wants to use:
+Add a service (function) that the instructor wants to use:
 function_2
 Give instructor's name: in9
 Give instructor's ID (an int): 9
@@ -221,7 +221,7 @@ Waiting to be served...
 **********************************************************************
 
 Pick an option from above (int number from 0 to 3): 1
-Add a service (function) that the intructor wants to use:
+Add a service (function) that the instructor wants to use:
 function_3
 Give instructor's name: in10
 Give instructor's ID (an int): 10
@@ -238,7 +238,7 @@ Waiting to be served...
 **********************************************************************
 
 Pick an option from above (int number from 0 to 3): 1
-Add a service (function) that the intructor wants to use:
+Add a service (function) that the instructor wants to use:
 function_3
 Give instructor's name: in11
 Give instructor's ID (an int): 11
@@ -271,7 +271,7 @@ Waiting to be served...
 **********************************************************************
 
 Pick an option from above (int number from 0 to 3): 1
-Add a service (function) that the intructor wants to use:
+Add a service (function) that the instructor wants to use:
 function_3
 Give instructor's name: in12
 Give instructor's ID (an int): 12
@@ -288,7 +288,7 @@ Waiting to be served...
 **********************************************************************
 
 Pick an option from above (int number from 0 to 3): 1
-Add a service (function) that the intructor wants to use:
+Add a service (function) that the instructor wants to use:
 function_1
 Give instructor's name: in13
 Give instructor's ID (an int): 13

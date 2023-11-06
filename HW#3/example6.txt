@@ -6,7 +6,7 @@ Do you want to open another service defining file?
 Press (Y/y) for 'yes', otherwise press anykey
 x
 ------------------------------------------------------------------
-PRINTIG AVAILABLE SERVICES (FUNCTIONS) TO BE CHOSEN FROM THE USERS
+PRINTING AVAILABLE SERVICES (FUNCTIONS) TO BE CHOSEN FROM THE USERS
 ------------------------------------------------------------------
 
 
@@ -46,7 +46,7 @@ GOING BACK TO MAIN MENU
 **********************************************************************
 
 Pick an option from above (int number from 0 to 3): 1
-Add a service (function) that the intructor wants to use:
+Add a service (function) that the instructor wants to use:
 func
 The requested service (function) does not exist.
 GOING BACK TO MAIN MENU

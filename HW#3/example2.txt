@@ -6,7 +6,7 @@ Do you want to open another service defining file?
 Press (Y/y) for 'yes', otherwise press anykey
 n
 ------------------------------------------------------------------
-PRINTIG AVAILABLE SERVICES (FUNCTIONS) TO BE CHOSEN FROM THE USERS
+PRINTING AVAILABLE SERVICES (FUNCTIONS) TO BE CHOSEN FROM THE USERS
 ------------------------------------------------------------------
 
 

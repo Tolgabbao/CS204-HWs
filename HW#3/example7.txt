@@ -35,22 +35,6 @@ print stack;, define a;, define x;, define z;, print stack;, define c;, print st
 **************** 4 - DISPLAY USER PAYMENTS               *************
 **********************************************************************
 
-Pick an option from above (int number from 0 to 3): 2
-Add a service (function) that the student wants to use:
-function_1
-Give student's name: Orhun
-Give student's ID (an int): 34611
-Orhun's service request of function_1 has been put in the student's queue.
-Waiting to be served...
-
-**********************************************************************
-**************** 0 - EXIT PROGRAM                        *************
-**************** 1 - ADD AN INSTRUCTOR SERVICE REQUEST   *************
-**************** 2 - ADD A STUDENT SERVICE REQUEST       *************
-**************** 3 - SERVE (PROCESS) A REQUEST           *************
-**************** 4 - DISPLAY USER PAYMENTS               *************
-**********************************************************************
-
 Pick an option from above (int number from 0 to 3): 1
 Add a service (function) that the intructor wants to use:
 function_1
@@ -71,26 +55,9 @@ Waiting to be served...
 Pick an option from above (int number from 0 to 3): 2
 Add a service (function) that the student wants to use:
 function_2
-Give student's name: Ezgi
-Give student's ID (an int): 26754
-Ezgi's service request of function_2 has been put in the student's queue.
-Waiting to be served...
-
-**********************************************************************
-**************** 0 - EXIT PROGRAM                        *************
-**************** 1 - ADD AN INSTRUCTOR SERVICE REQUEST   *************
-**************** 2 - ADD A STUDENT SERVICE REQUEST       *************
-**************** 3 - SERVE (PROCESS) A REQUEST           *************
-**************** 4 - DISPLAY USER PAYMENTS               *************
-**********************************************************************
-
-Pick an option from above (int number from 0 to 3): 1
-Add a service (function) that the intructor wants to use:
-function_3
-Give instructor's name: Fatih
-Give instructor's ID (an int): 20232
-Prof. Fatih's service request of function_3
-has been put in the instructor's queue.
+Give student's name: Orhun
+Give student's ID (an int): 34611
+Orhun's service request of function_2 has been put in the student's queue.
 Waiting to be served...
 
 **********************************************************************
@@ -102,10 +69,8 @@ Waiting to be served...
 **********************************************************************
 
 Pick an option from above (int number from 0 to 3): 4
-Name: Orhun ID: 34611 0 TRY
 Name: Kamer ID: 12345 0 TRY
-Name: Ezgi ID: 26754 0 TRY
-Name: Fatih ID: 20232 0 TRY
+Name: Orhun ID: 34611 0 TRY
 
 **********************************************************************
 **************** 0 - EXIT PROGRAM                        *************
@@ -293,25 +258,95 @@ GOING BACK TO MAIN MENU
 **********************************************************************
 
 Pick an option from above (int number from 0 to 3): 3
-Processing instructors queue...
-Processing prof.Fatih's request (with ID 20232) of service (function):
-function_3
+Instructors queue is empty. Proceeding with students queue...
+Processing Orhun's request (with ID 34611) of service (function):
+function_2
 -------------------------------------------------------
-Executing print stack; command from function_3
+Executing print stack; command from function_2
 PRINTING THE STACK TRACE:
 The stack is empty
+Executing print stack; command from function_2
+PRINTING THE STACK TRACE:
+function_2: define a;
+function_2: define b;
+Calling function_3 from function_2
 Executing print stack; command from function_3
 PRINTING THE STACK TRACE:
+function_2: define a;
+function_2: define b;
+Executing print stack; command from function_3
+PRINTING THE STACK TRACE:
+function_2: define a;
+function_2: define b;
 function_3: define a;
 function_3: define x;
 function_3: define z;
 Executing print stack command from function_3
 PRINTING THE STACK TRACE:
+function_2: define a;
+function_2: define b;
 function_3: define a;
 function_3: define x;
 function_3: define z;
 function_3: define c;
 function_3 is finished. Clearing the stack from it's data...
+Executing print stack; command from function_2
+PRINTING THE STACK TRACE:
+function_2: define a;
+function_2: define b;
+Executing print stack; command from function_2
+PRINTING THE STACK TRACE:
+function_2: define a;
+function_2: define b;
+function_2: define x;
+function_2: define y;
+function_2: define z;
+Calling function_3 from function_2
+Executing print stack; command from function_3
+PRINTING THE STACK TRACE:
+function_2: define a;
+function_2: define b;
+function_2: define x;
+function_2: define y;
+function_2: define z;
+Executing print stack; command from function_3
+PRINTING THE STACK TRACE:
+function_2: define a;
+function_2: define b;
+function_2: define x;
+function_2: define y;
+function_2: define z;
+function_3: define a;
+function_3: define x;
+function_3: define z;
+Executing print stack command from function_3
+PRINTING THE STACK TRACE:
+function_2: define a;
+function_2: define b;
+function_2: define x;
+function_2: define y;
+function_2: define z;
+function_3: define a;
+function_3: define x;
+function_3: define z;
+function_3: define c;
+function_3 is finished. Clearing the stack from it's data...
+Executing print stack; command from function_2
+PRINTING THE STACK TRACE:
+function_2: define a;
+function_2: define b;
+function_2: define x;
+function_2: define y;
+function_2: define z;
+Executing print stack command from function_2
+PRINTING THE STACK TRACE:
+function_2: define a;
+function_2: define b;
+function_2: define x;
+function_2: define y;
+function_2: define z;
+function_2: define c;
+function_2 is finished. Clearing the stack from it's data...
 GOING BACK TO MAIN MENU
 
 **********************************************************************
@@ -323,8 +358,50 @@ GOING BACK TO MAIN MENU
 **********************************************************************
 
 Pick an option from above (int number from 0 to 3): 3
+Both instructor's and student's queue is empty.
+No request is processed.
+GOING BACK TO MAIN MENU
+
+**********************************************************************
+**************** 0 - EXIT PROGRAM                        *************
+**************** 1 - ADD AN INSTRUCTOR SERVICE REQUEST   *************
+**************** 2 - ADD A STUDENT SERVICE REQUEST       *************
+**************** 3 - SERVE (PROCESS) A REQUEST           *************
+**************** 4 - DISPLAY USER PAYMENTS               *************
+**********************************************************************
+
+Pick an option from above (int number from 0 to 3): 2
+Add a service (function) that the student wants to use:
+function_1
+Give student's name: Ezgi
+Give student's ID (an int): 26754
+Ezgi's service request of function_1 has been put in the student's queue.
+Waiting to be served...
+
+**********************************************************************
+**************** 0 - EXIT PROGRAM                        *************
+**************** 1 - ADD AN INSTRUCTOR SERVICE REQUEST   *************
+**************** 2 - ADD A STUDENT SERVICE REQUEST       *************
+**************** 3 - SERVE (PROCESS) A REQUEST           *************
+**************** 4 - DISPLAY USER PAYMENTS               *************
+**********************************************************************
+
+Pick an option from above (int number from 0 to 3): 4
+Name: Kamer ID: 12345 85 TRY
+Name: Orhun ID: 34611 48 TRY
+Name: Ezgi ID: 26754 0 TRY
+
+**********************************************************************
+**************** 0 - EXIT PROGRAM                        *************
+**************** 1 - ADD AN INSTRUCTOR SERVICE REQUEST   *************
+**************** 2 - ADD A STUDENT SERVICE REQUEST       *************
+**************** 3 - SERVE (PROCESS) A REQUEST           *************
+**************** 4 - DISPLAY USER PAYMENTS               *************
+**********************************************************************
+
+Pick an option from above (int number from 0 to 3): 3
 Instructors queue is empty. Proceeding with students queue...
-Processing Orhun's request (with ID 34611) of service (function):
+Processing Ezgi's request (with ID 26754) of service (function):
 function_1
 -------------------------------------------------------
 Executing print stack; command from function_1
@@ -499,124 +576,10 @@ GOING BACK TO MAIN MENU
 **************** 4 - DISPLAY USER PAYMENTS               *************
 **********************************************************************
 
-Pick an option from above (int number from 0 to 3): 3
-Instructors queue is empty. Proceeding with students queue...
-Processing Ezgi's request (with ID 26754) of service (function):
-function_2
--------------------------------------------------------
-Executing print stack; command from function_2
-PRINTING THE STACK TRACE:
-The stack is empty
-Executing print stack; command from function_2
-PRINTING THE STACK TRACE:
-function_2: define a;
-function_2: define b;
-Calling function_3 from function_2
-Executing print stack; command from function_3
-PRINTING THE STACK TRACE:
-function_2: define a;
-function_2: define b;
-Executing print stack; command from function_3
-PRINTING THE STACK TRACE:
-function_2: define a;
-function_2: define b;
-function_3: define a;
-function_3: define x;
-function_3: define z;
-Executing print stack command from function_3
-PRINTING THE STACK TRACE:
-function_2: define a;
-function_2: define b;
-function_3: define a;
-function_3: define x;
-function_3: define z;
-function_3: define c;
-function_3 is finished. Clearing the stack from it's data...
-Executing print stack; command from function_2
-PRINTING THE STACK TRACE:
-function_2: define a;
-function_2: define b;
-Executing print stack; command from function_2
-PRINTING THE STACK TRACE:
-function_2: define a;
-function_2: define b;
-function_2: define x;
-function_2: define y;
-function_2: define z;
-Calling function_3 from function_2
-Executing print stack; command from function_3
-PRINTING THE STACK TRACE:
-function_2: define a;
-function_2: define b;
-function_2: define x;
-function_2: define y;
-function_2: define z;
-Executing print stack; command from function_3
-PRINTING THE STACK TRACE:
-function_2: define a;
-function_2: define b;
-function_2: define x;
-function_2: define y;
-function_2: define z;
-function_3: define a;
-function_3: define x;
-function_3: define z;
-Executing print stack command from function_3
-PRINTING THE STACK TRACE:
-function_2: define a;
-function_2: define b;
-function_2: define x;
-function_2: define y;
-function_2: define z;
-function_3: define a;
-function_3: define x;
-function_3: define z;
-function_3: define c;
-function_3 is finished. Clearing the stack from it's data...
-Executing print stack; command from function_2
-PRINTING THE STACK TRACE:
-function_2: define a;
-function_2: define b;
-function_2: define x;
-function_2: define y;
-function_2: define z;
-Executing print stack command from function_2
-PRINTING THE STACK TRACE:
-function_2: define a;
-function_2: define b;
-function_2: define x;
-function_2: define y;
-function_2: define z;
-function_2: define c;
-function_2 is finished. Clearing the stack from it's data...
-GOING BACK TO MAIN MENU
-
-**********************************************************************
-**************** 0 - EXIT PROGRAM                        *************
-**************** 1 - ADD AN INSTRUCTOR SERVICE REQUEST   *************
-**************** 2 - ADD A STUDENT SERVICE REQUEST       *************
-**************** 3 - SERVE (PROCESS) A REQUEST           *************
-**************** 4 - DISPLAY USER PAYMENTS               *************
-**********************************************************************
-
-Pick an option from above (int number from 0 to 3): 3
-Both instructor's and student's queue is empty.
-No request is processed.
-GOING BACK TO MAIN MENU
-
-**********************************************************************
-**************** 0 - EXIT PROGRAM                        *************
-**************** 1 - ADD AN INSTRUCTOR SERVICE REQUEST   *************
-**************** 2 - ADD A STUDENT SERVICE REQUEST       *************
-**************** 3 - SERVE (PROCESS) A REQUEST           *************
-**************** 4 - DISPLAY USER PAYMENTS               *************
-**********************************************************************
-
 Pick an option from above (int number from 0 to 3): 4
-Name: Orhun ID: 34611 85 TRY
 Name: Kamer ID: 12345 85 TRY
-Name: Ezgi ID: 26754 48 TRY
-Name: Fatih ID: 20232 10 TRY
+Name: Orhun ID: 34611 48 TRY
+Name: Ezgi ID: 26754 85 TRY
 
 **********************************************************************
 **************** 0 - EXIT PROGRAM                        *************

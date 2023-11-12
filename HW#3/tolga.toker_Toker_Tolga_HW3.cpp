@@ -86,7 +86,7 @@ public:
 
     void addService(string serviceName, std::vector<string> commands); // Method to add a service to the list
     void printServices(); // Method to print all services and their commands
-    void executeService(string serviceName, PaymentList& paymentList, CommandStack& programStack, string name, int id, string job); // Method to execute a specific service
+    void processWorkload(string serviceName, PaymentList& paymentList, CommandStack& programStack, string name, int id, string job); // Method to execute a specific service
     bool isServiceAvailable(string serviceName); // Method to check if a service is available
 private:
     ServiceNode* head; // Head of the linked list
@@ -134,13 +134,25 @@ ServiceList::ServiceList() {
 
 // Destructor
 ServiceList::~ServiceList() {
-    ServiceNode* temp = head;
-    while (temp != nullptr) {
-        ServiceNode* next = temp->nextService;
-        delete temp;
-        temp = next;
+    ServiceNode* tempService = head;
+    while (tempService != nullptr) {
+        ServiceNode* nextService = tempService->nextService;
+
+        // Deallocate command nodes for the current service
+        CommandNode* tempCommand = tempService->commandList;
+        while (tempCommand != nullptr) {
+            CommandNode* nextCommand = tempCommand->next;
+            delete tempCommand;
+            tempCommand = nextCommand;
+        }
+
+        // Deallocate the current service node
+        delete tempService;
+
+        tempService = nextService;
     }
 }
+
 
 // Method to add a service to the list
 void ServiceList::addService(string serviceName, vector<string> commands) {
@@ -200,7 +212,7 @@ void ServiceList::printServices() {
     }
 }
 // cout << request << " is finished. Clearing the stack from it's data..." << endl;
-void ServiceList::executeService(string serviceName, PaymentList& paymentList, CommandStack& programStack, string name, int id, string job) {
+void ServiceList::processWorkload(string serviceName, PaymentList& paymentList, CommandStack& programStack, string name, int id, string job) {
     ServiceNode* temp = head;
     while (temp != nullptr) {
         if (temp->serviceName == serviceName) {
@@ -233,7 +245,7 @@ void ServiceList::executeService(string serviceName, PaymentList& paymentList, C
                     string calledServiceName = command.substr(5, command.length() - 5);
                     cout << "Calling " << calledServiceName << " from " << temp->serviceName << endl;
                     
-                    executeService(calledServiceName, paymentList, programStack, name, id, job);
+                    processWorkload(calledServiceName, paymentList, programStack, name, id, job);
                     
                     servicePrice += 5;
                 }
@@ -533,8 +545,15 @@ void CommandStack::printReverseStack() {
 }
 
 
+//Global variables
+InstructorQueue instructorsQueue(500);
+StudentQueue studentsQueue;	
+ServiceList serviceList;
+PaymentList paymentList;
+
+
 // Method to process the workload
-void processWorkload(InstructorQueue& instructorsQueue, StudentQueue& studentsQueue, ServiceList& serviceList, PaymentList& paymentList) {
+void processWorkload() {
     static int instructorCount = 0;
     int id = 0;
     string name = "";
@@ -545,16 +564,21 @@ void processWorkload(InstructorQueue& instructorsQueue, StudentQueue& studentsQu
         cout << "Processing prof." << name << "'s request (with ID " << id << ") of service (function):" << endl << request << endl;
         cout << "-------------------------------------------------------" << endl;
         CommandStack programStack;
-        serviceList.executeService(request, paymentList, programStack, name, id, "instructor");
+        serviceList.processWorkload(request, paymentList, programStack, name, id, "instructor");
         cout << "GOING BACK TO MAIN MENU" << endl;
         instructorCount++;
     } else if (!studentsQueue.isEmpty()) {
-		cout << "Instructors queue is empty. Proceeding with students queue..." << endl;
+        if (instructorsQueue.isEmpty()){
+            cout << "Instructors queue is empty. Proceeding with students queue..." << endl;
+        }
+        else{
+            cout << "10 instructors are served. Taking 1 student from the queue..." << endl;
+        }
         string request = studentsQueue.dequeue(id, name);
         cout << "Processing " << name << "'s request (with ID " << id << ") of service (function):" << endl << request << endl;
         cout << "-------------------------------------------------------" << endl;
         CommandStack programStack;
-        serviceList.executeService(request, paymentList, programStack, name, id, "student");
+        serviceList.processWorkload(request, paymentList, programStack, name, id, "student");
         cout << "GOING BACK TO MAIN MENU" << endl;
         instructorCount = 0;
     } else {
@@ -562,7 +586,7 @@ void processWorkload(InstructorQueue& instructorsQueue, StudentQueue& studentsQu
     }
 }
 
-void addInstructorWorkload(InstructorQueue& instructorsQueue, PaymentList& paymentList, ServiceList& serviceList) {
+void addInstructorWorkload() {
 	string request = "";
 	string name = "";
 	int id = 0;
@@ -583,7 +607,7 @@ void addInstructorWorkload(InstructorQueue& instructorsQueue, PaymentList& payme
 	}
 }
 
-void addStudentWorkload(StudentQueue& studentsQueue, PaymentList& paymentList, ServiceList& serviceList) {
+void addStudentWorkload() {
 	string request = "";
 	string name = "";
 	int id = 0;
@@ -604,12 +628,12 @@ void addStudentWorkload(StudentQueue& studentsQueue, PaymentList& paymentList, S
 	}
 }
 
-void displayUsersPayments(PaymentList& paymentList) {
+void displayUsersPayments() {
 	paymentList.printPayments();
 }
 
 //Initialize the service list (read from the file)
-void init(ServiceList& serviceList){
+void init(){
 	//Initialize the service list
 	//Read from the file
 	//Add services to the service list
@@ -654,11 +678,7 @@ void init(ServiceList& serviceList){
 
 int main()
 {
-	InstructorQueue instructorsQueue(500);
-	StudentQueue studentsQueue;	
-	ServiceList serviceList;
-	PaymentList paymentList;
-	init(serviceList);
+	init();
 	while (true){		
        cout << endl;
  		cout<<"**********************************************************************"<<endl
@@ -678,16 +698,16 @@ int main()
 				cout<<"PROGRAM EXITING ... "<<endl;
 				exit(0);
 			case 1:
-				addInstructorWorkload(instructorsQueue, paymentList, serviceList);
+				addInstructorWorkload();
 				break;
 			case 2:
-				addStudentWorkload(studentsQueue, paymentList, serviceList);
+				addStudentWorkload();
 				break;
 			case 3:
-				processWorkload(instructorsQueue, studentsQueue, serviceList, paymentList);
+				processWorkload();
 				break;
 			case 4:
-				displayUsersPayments(paymentList);
+				displayUsersPayments();
 				break;
 			default:
 				cout<<"INVALID OPTION!!! Try again"<<endl;

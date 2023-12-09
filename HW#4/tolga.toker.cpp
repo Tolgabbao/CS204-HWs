@@ -138,8 +138,6 @@ private:
 
 
 
-// Driver code remains the same as previously provided
-
 int main() {
     LinkedListSet set1;
     set1 + 1 + 2 + 3 + 17; // Insertion
